@@ -1,0 +1,197 @@
+{
+	"welcomeFile": "/index.html",
+	"routes": [{
+		"path": "/sap/opu/odata",
+		"target": {
+			"type": "destination",
+			"name": "DE2",
+			"entryPath": "/sap/opu/odata/"
+		},
+		"description": "DE2"
+	}, {
+		"path": "/sap/opu/odata",
+		"target": {
+			"type": "destination",
+			"name": "QE2",
+			"entryPath": "/sap/opu/odata/"
+		},
+		"description": "QE2"
+	}, {
+		"path": "/sap/opu/odata",
+		"target": {
+			"type": "destination",
+			"name": "RE2",
+			"entryPath": "/sap/opu/odata/"
+		},
+		"description": "RE2"
+	}, {
+		"path": "/sap/opu/odata",
+		"target": {
+			"type": "destination",
+			"name": "PE1",
+			"entryPath": "/sap/opu/odata/"
+		},
+		"description": "PE1"
+	}, {
+		"path": "/sap/ui5/1/resources/sap/cus/crm/lib/reuse",
+		"target": {
+			"type": "application",
+			"name": "cuscrmlibreuse",
+			"entryPath": "/sap/cus/crm/lib/reuse"
+		},
+		"description": "CRM library (legacy path)"
+	}, {
+		"path": "/resources/sap/cus/crm/lib/reuse",
+		"target": {
+			"type": "application",
+			"name": "cuscrmlibreuse",
+			"entryPath": "/sap/cus/crm/lib/reuse"
+		},
+		"description": "CRM library"
+	}, {
+		"path": "/sap/ui5/1/resources/sap/retail/store/lib/reuse",
+		"target": {
+			"type": "application",
+			"name": "retailstorelibreuse",
+			"entryPath": "/sap/retail/store/lib/reuse"
+		},
+		"description": "Retail library (legacy path)"
+	}, {
+		"path": "/resources/sap/retail/store/lib/reuse",
+		"target": {
+			"type": "application",
+			"name": "retailstorelibreuse",
+			"entryPath": "/sap/retail/store/lib/reuse"
+		},
+		"description": "Retail library"
+	}, {
+		"path": "/sap/ui5/1/resources/sap/hcm/lib/common",
+		"target": {
+			"type": "application",
+			"name": "hcmlibcommon",
+			"entryPath": "/sap/hcm/lib/common"
+		},
+		"description": "HCM library (legacy path)"
+	}, {
+		"path": "/resources/sap/hcm/lib/common",
+		"target": {
+			"type": "application",
+			"name": "hcmlibcommon",
+			"entryPath": "/sap/hcm/lib/common"
+		},
+		"description": "HCM library"
+	}, {
+		"path": "/webapp/parent",
+		"target": {
+			"type": "application",
+			"preferLocal": true,
+			"name": "uis2pmmpurcontractapprove"
+		},
+		"description": "Original Application"
+	}, {
+		"path": "/webapp/resources/sap/cus/crm/lib/reuse",
+		"target": {
+			"type": "application",
+			"name": "cuscrmlibreuse",
+			"entryPath": "/sap/cus/crm/lib/reuse"
+		},
+		"description": "CRM library"
+	}, {
+		"path": "/webapp/resources/sap/retail/store/lib/reuse",
+		"target": {
+			"type": "application",
+			"name": "retailstorelibreuse",
+			"entryPath": "/sap/retail/store/lib/reuse"
+		},
+		"description": "Retail library"
+	}, {
+		"path": "/webapp/resources/sap/hcm/lib/common",
+		"target": {
+			"type": "application",
+			"name": "hcmlibcommon",
+			"entryPath": "/sap/hcm/lib/common"
+		},
+		"description": "HCM library"
+	}, {
+		"path": "/webapp/resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/resources"
+		},
+		"description": "SAPUI5 Resources"
+	}, {
+		"path": "/webapp/test-resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/test-resources"
+		},
+		"description": "SAPUI5 Test Resources"
+	}, {
+		"path": "/dist/parent",
+		"target": {
+			"type": "application",
+			"preferLocal": true,
+			"name": "uis2pmmpurcontractapprove"
+		},
+		"description": "Original Application"
+	}, {
+		"path": "/dist/resources/sap/cus/crm/lib/reuse",
+		"target": {
+			"type": "application",
+			"name": "cuscrmlibreuse",
+			"entryPath": "/sap/cus/crm/lib/reuse"
+		},
+		"description": "CRM library"
+	}, {
+		"path": "/dist/resources/sap/retail/store/lib/reuse",
+		"target": {
+			"type": "application",
+			"name": "retailstorelibreuse",
+			"entryPath": "/sap/retail/store/lib/reuse"
+		},
+		"description": "Retail library"
+	}, {
+		"path": "/dist/resources/sap/hcm/lib/common",
+		"target": {
+			"type": "application",
+			"name": "hcmlibcommon",
+			"entryPath": "/sap/hcm/lib/common"
+		},
+		"description": "HCM library"
+	}, {
+		"path": "/dist/resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/resources"
+		},
+		"description": "SAPUI5 Resources"
+	}, {
+		"path": "/dist/test-resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/test-resources"
+		},
+		"description": "SAPUI5 Test Resources"
+	}, {
+		"path": "/resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/resources"
+		},
+		"description": "SAPUI5 Resources"
+	}, {
+		"path": "/test-resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/test-resources"
+		},
+		"description": "SAPUI5 Test Resources"
+	}],
+	"sendWelcomeFileRedirect": true
+}

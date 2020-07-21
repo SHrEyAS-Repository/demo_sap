@@ -1,0 +1,4 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:form="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout">
+	<!-- This extension point can be used to add fields to form:formElements -->
+</core:FragmentDefinition>

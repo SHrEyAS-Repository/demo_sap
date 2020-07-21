@@ -1,0 +1,38 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m" controllerName="ui.s2p.mm.purcontract.approve.view.S2">
+	<Page id="page" title="{i18n>view.Master.title}">
+		<content>
+			<List id="list" mode="{device>/listMode}" select="_handleSelect">
+				<ObjectListItem id="MAIN_LIST_ITEM" type="{device>/listItemType}" press="_handleItemPress" title="{SupplierName}"
+					number="{parts : [{path : 'Value'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.lazyRoundNumber'}" numberUnit="{Currency}">
+					<firstStatus>
+						<ObjectStatus id="STATUS1"
+							text="{parts : [{path:'WiCreatedAt'}], formatter:'ui.s2p.mm.purcontract.approve.util.Conversions.deliveryDateFormatter'}"/>
+					</firstStatus>
+					<attributes>
+						<ObjectAttribute id="ATTR0" text="{PoNumber}"/>
+						<ObjectAttribute id="ATTR5" text="{MaterialNumber}"/>
+						<ObjectAttribute id="ATTR1" text="{ItemDescriptions}"/>
+						<ObjectAttribute id="ATTR2" text="{CreatedByName}"/>
+						<ObjectAttribute id="ATTR3"
+							text="{parts : [{path : 'ForwardedByName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.forwardedBy'}"
+							visible="{parts : [{path : 'ForwardedByName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonFieldVisibilityTrigger'}"/>
+						<!--	<ObjectAttribute id="ATTR4"
+							text="{parts : [{path : 'SubstitutingForName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.substitutedBy'}"
+							visible="{parts : [{path : 'SubstitutingForName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonFieldVisibilityTrigger'}"/>
+					-->
+					</attributes>
+					<!-- @ExtensionPoint extListItemInfo: list information -->
+					<core:ExtensionPoint name="extListItemInfo"/>
+				</ObjectListItem>
+			</List>
+		</content>
+		<footer>
+			<Bar id="footer"></Bar>
+		</footer>
+	</Page>
+</core:View>

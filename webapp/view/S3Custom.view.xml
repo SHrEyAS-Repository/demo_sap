@@ -1,0 +1,428 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.layout"
+	controllerName="ui.s2p.mm.purcontract.approve.view.S3">
+	<Page id="WIDetail" title="{i18n>view.PurchaseContract.title}" class="sapUiFioriObjectPage">
+		<content>
+			<!-- Header of S3 screen -->
+			<ObjectHeader id="Header" introPress="onAgentPress" introActive="true" title="{SupplierName}({SupplierID})" titlePress="onVendorPress"
+				titleActive="true" number="{parts:[{path : 'Value'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.formatAmount'}"
+				numberUnit="{Currency}">
+				<firstStatus>
+					<ObjectStatus id="ObjectHeaderStatusWiCreatedAt"
+						text="{parts:[{path:'ContractDate'}], formatter:'ui.s2p.mm.purcontract.approve.util.Conversions.deliveryDateFormatter'}"></ObjectStatus>
+				</firstStatus>
+				<attributes>
+					<ObjectAttribute id="ObjectHeaderAttributeCreatedByName" text="{CreatedByName}" press="onNamePress" active="true"></ObjectAttribute>
+					<ObjectAttribute id="ObjectHeaderAttributeForwardedBy"
+						text="{parts:[{path : 'ForwardedByName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.forwardedBy'}"
+						press="onForwardedPress" active="true"
+						visible="{parts:[{path : 'ForwardedByName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonFieldVisibilityTrigger'}"></ObjectAttribute>
+					<ObjectAttribute id="ObjectHeaderAttributeSubstitutedBy"
+						text="{parts:[{path : 'SubstitutingForName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.substitutedBy'}"
+						press="onSubstitutingPress" active="true"
+						visible="{parts:[{path : 'SubstitutingForName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonFieldVisibilityTrigger'}"></ObjectAttribute>
+				</attributes>
+				<!-- @ExtensionPoint extHeaderInfo: header information -->
+				<core:ExtensionPoint name="extHeaderInfo"/>
+			</ObjectHeader>
+			<!-- Toggle Area of S3 screen -->
+			<IconTabBar id="TabContainer" select="handleTabSelect">
+				<items>
+					<IconTabFilter id="IconTabBarFilterPCInformation" icon="sap-icon://hint" iconColor="Default" key="contentInfo">
+						<!-- Contract Information of S3 screen -->
+						<content>
+							<form:Form id="InfoForm" class="detailInfoForm">
+								<form:layout>
+									<form:ResponsiveLayout></form:ResponsiveLayout>
+								</form:layout>
+								<form:formContainers>
+									<form:FormContainer>
+										<form:layoutData>
+											<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+										</form:layoutData>
+										<form:formElements>
+											<form:FormElement id="PCInformationPCLabel">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.purchaseContractLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text text="{PoNumber}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<form:FormElement id="PCInformationPurchaseOrgDescription"
+												visible="{parts:[{path : 'PurchOrg'}, {path : 'PurchOrgDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.purchOrgVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.purchasingOrgLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text
+														text="{parts:[{path : 'PurchOrg'}, {path : 'PurchOrgDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.purchOrgFormatter'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<form:FormElement id="PCInformationPurchaseGroupDescription"
+												visible="{parts:[{path : 'PurchGrp'}, {path : 'PurchGrpDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.purchGrpVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.purchasingGroupLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text
+														text="{parts:[{path : 'PurchGrp'}, {path : 'PurchGrpDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.purchGrpFormatter'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<!--	<form:FormElement id="PCInformationContractType"
+												visible="{parts:[{path : 'ContractTypeDescription'},{path : 'ContractType'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonFieldVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.contractTypeLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text
+														text="{parts:[{path : 'ContractTypeDescription'},{path : 'ContractType'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.contractTypeFormatter'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<form:FormElement id="PCInformationAccountAssignment"
+												visible="{parts:[{path : 'HeaderInfo/CumulatedAccountingTypeCode'}, {path : 'HeaderInfo/AccountCategoryDescription'}, {path : 'HeaderInfo/AccountNumber'}, {path : 'HeaderInfo/AccountDescription'}, {path : 'HeaderInfo/GlAccountNumber'}, {path : 'HeaderInfo/GlAccountDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.accountingVisibility'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.accountAssignment}"></Label>
+												</form:label>
+												<form:fields>
+													<Text text="{parts : [{path : 'HeaderInfo'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.accountingFormatter'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>-->
+											<!--<form:FormElement id="PCInformationContractDate"
+												visible="{parts:[{path : 'ContractDate'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonFieldVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.dateLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text text="{parts:[{path : 'ContractDate'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.contractDateFormatter'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>-->
+											<!-- Validity -->
+											<form:FormElement id="PCInformationValidity"
+												visible="{parts:[{path : 'StartDate'}, {path : 'EndDate'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.validityVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.validityLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text
+														text="{parts:[{path : 'StartDate'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.contractDateFormatter'} to {parts:[{path : 'EndDate'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.contractDateFormatter'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<!--	<form:FormElement id="PCInformationDeliveryDate"
+												visible="{parts:[{path : 'DeliveryDate'}, {path : 'DeliveryDateAlsoLater'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonFieldVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.deliveryDateLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text
+														text="{parts:[{path : 'DeliveryDate'}, {path : 'DeliveryDateAlsoLater'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.deliveryDateFormatter'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<form:FormElement id="PCInformationPlant"
+												visible="{parts:[{path : 'PlantName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonFieldVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.plantLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text text="{PlantName}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>-->
+											<form:FormElement id="PCInformationPaymentTerm"
+												visible="{parts:[{path : 'PaymentTermDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonFieldVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.paymentTermsLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text text="{PaymentTermDescription}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<!--	<form:FormElement id="PCInformationIncoterm"
+												visible="{parts:[{path : 'Incoterm'}, {path : 'IncotermLocation'}, {path : 'IncotermDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.incoTermsVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.incoTermsLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text
+														text="{parts:[{path : 'Incoterm'}, {path : 'IncotermLocation'}, {path : 'IncotermDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.incoTermsFormatter'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<form:FormElement id="PCInformationCompany"
+												visible="{parts:[{path : 'CompanyCode'}, {path : 'CompanyCodeDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.companyCodeVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.companyCodeLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text
+														text="{parts:[{path : 'CompanyCode'}, {path : 'CompanyCodeDescription'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.companyCodeFormatter'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<form:FormElement id="PCInformationCPDVendor"
+												visible="{parts : [{path : 'CPDVendorName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.stringVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.CPDVendorLabel}"></Label>
+												</form:label>
+												<form:fields>
+													<Text text="{parts : [{path : 'CPDVendorName'}], formatter: 'ui.s2p.mm.purcontract.approve.util.Conversions.stringFormatterInterop'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>
+											<form:FormElement id="PCInformationOrderingAdress"
+												visible="{parts : [{path : 'OrderingAddress'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.stringVisibilityTrigger'}">
+												<form:layoutData>
+													<layout:ResponsiveFlowLayoutData linebreak="true" margin="false"></layout:ResponsiveFlowLayoutData>
+												</form:layoutData>
+												<form:label>
+													<Label text="{i18n>view.PurchaseContract.OrderingAdress}"></Label>
+												</form:label>
+												<form:fields>
+													<Text text="{parts : [{path : 'OrderingAddress'}], formatter: 'ui.s2p.mm.purcontract.approve.util.Conversions.stringFormatterInterop'}">
+														<layoutData>
+															<layout:ResponsiveFlowLayoutData weight="2" alignItems="End"></layout:ResponsiveFlowLayoutData>
+														</layoutData>
+													</Text>
+												</form:fields>
+											</form:FormElement>-->
+											<!-- @ExtensionPoint extInformation: Do not use this extension point. It has a duplicate name. Use extInformationS3 instead. -->
+											<core:ExtensionPoint name="extInformation"/>
+											<!-- @ExtensionPoint extInformationS3: information area -->
+											<core:ExtensionPoint name="extInformationS3"/>
+										</form:formElements>
+									</form:FormContainer>
+								</form:formContainers>
+							</form:Form>
+						</content>
+					</IconTabFilter>
+					<!-- Contract Notes of S3 screen -->
+					<IconTabFilter id="IconTabBarFilterPCNotes" icon="sap-icon://notes" iconColor="Default" count="{NumberOfNotes}"
+						visible="{parts:[{path : 'Notes'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.notesVisibilityTrigger'}" key="contentNotes">
+						<content>
+							<List id="NotesBox" items="{Notes}" inset="true" showSeparators="None">
+								<items>
+									<FeedListItem id="NoteTemplate" senderPress="onNoteSenderPress" text="{Text}" info="{TypeDescription}"
+										sender="{parts:[{path : 'NoteIsApproverNote'}, {path : 'CreatedByName'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.approverNoteValueFormatter'}"
+										timestamp="{parts:[{path : 'NoteIsApproverNote'}, {path : 'CreatedAt'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.noteDateFormatter'}"></FeedListItem>
+								</items>
+							</List>
+						</content>
+					</IconTabFilter>
+					<!-- Contract Attachment of S3 screen -->
+					<IconTabFilter id="IconTabBarFilterPCAttachments" icon="sap-icon://attachment" iconColor="Default" count="{NumberOfAttachments}"
+						visible="{parts:[{path : 'Attachments'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.attachmentsVisibilityTrigger'}"
+						key="contentAttachments">
+						<content>
+							<List id="AttachmentList" items="{Attachments}" inset="true" showSeparators="None">
+								<items>
+									<StandardListItem id="AttachmentListItems" press="onAttachment" type="Navigation" icon-inset="false"
+										title="{parts:[{path:'Description'},{path:'MimeType'}], formatter:'ui.s2p.mm.purcontract.approve.util.Conversions.formatAttachmentDesc'}"
+										icon="{parts:[{path:'MimeType'}], formatter:'ui.s2p.mm.purcontract.approve.util.Conversions.formatAttachmentIcon'}"
+										description="{parts:[{path:'FileSize'}], formatter:'ui.s2p.mm.purcontract.approve.util.Conversions.formatAttachmentSize'}"></StandardListItem>
+								</items>
+							</List>
+						</content>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+			<!--<layout:VerticalLayout width="100%"> -->
+			<!-- Item table on S3 screen -->
+			<Table id="itemsTable" items="{ItemDetails}" noDataText="{i18n>view.PurchaseContract.placeholder}" class="detailControlPadding"
+				growing="true" growingScrollToLoad="false"
+				headerText="{parts:[{path : 'NumberOfItems'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.itemsTableHeader'}">
+				<columns>
+					<!--	<Column hAlign="Begin" id="ItemsTableColumnDescription">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.descriptionLabel}"></Label>
+						</header>
+					</Column>
+					<Column hAlign="Begin" id="ItemsTableColumnItemCategory" demandPopin="true" minScreenWidth="Medium">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.itemCategory}"></Label>
+						</header>
+					</Column>
+					<Column id="ItemsTableColumnQuantity" hAlign="End" demandPopin="true" minScreenWidth="Medium">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.quantity}"></Label>
+						</header>
+					</Column>
+					<Column id="ItemsTableColumnSubtotal" hAlign="End" demandPopin="true" minScreenWidth="Medium">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.subtotal}"></Label>
+						</header>
+					</Column>-->
+					<!--McLaren entension changes below-->
+					<Column hAlign="Begin" id="ItemsTableColumnLineItem">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.ItemNo}"></Label>
+						</header>
+					</Column>
+					<Column hAlign="Begin" id="ItemsTableColumnMaterial">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.materialNo}" tooltip="{i18n>view.PurchaseContract.materialNo}"></Label>
+						</header>
+					</Column>
+					<Column hAlign="Begin" id="ItemsTableColumnDescription">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.descriptionLabel}" tooltip="{i18n>view.PurchaseContract.descriptionLabel}"></Label>
+						</header>
+					</Column>
+					<Column hAlign="Begin" id="ItemsTableColumnNetPrice">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.netPrice}"></Label>
+						</header>
+					</Column>
+					<Column hAlign="Begin" id="ItemsTableColumnPer">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.per}"></Label>
+						</header>
+					</Column>
+					<Column hAlign="Begin" id="ItemsTableColumnOrderperUnit">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.OrderPerunit}" tooltip="{i18n>view.PurchaseContract.OrderPerunit}"></Label>
+						</header>
+					</Column>
+					<Column hAlign="Begin" id="ItemsTableColumnPlant">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.plantLabel}"></Label>
+						</header>
+					</Column>
+					<Column hAlign="Begin" id="ItemsTableColumnStorageLoc">
+						<header>
+							<Label text="{i18n>view.PurchaseContract.SLOC}" tooltip="{i18n>view.PurchaseContract.SLOC}"></Label>
+						</header>
+					</Column>
+					<!--McLaren entension changes complete-->
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation" press="onLineItemPress">
+						<cells>
+							<!--	<ObjectIdentifier title="{Description}"
+								badgeNotes="{parts:[{path : 'NumberOfNotes'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonCountVisibilityTrigger'}"
+								badgeAttachments="{parts:[{path : 'NumberOfAttachments'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonCountVisibilityTrigger'}"></ObjectIdentifier>
+							<Text
+								text="{parts : [{path : 'ItemCategoryDescription'}, {path : 'ProductDetails/ItemType'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.itemCategoryFormatter'}"></Text>
+							<ObjectNumber number="{parts: [{path: 'Quantity'}], formatter: 'ui.s2p.mm.purcontract.approve.util.Conversions.formatNumber'}"
+								numberUnit="{UnitDescription}"></ObjectNumber>
+							<ObjectNumber number="{parts: [{path: 'Value'}], formatter: 'ui.s2p.mm.purcontract.approve.util.Conversions.formatNumberItemType'}"
+								visible="{parts:[{path : 'ProductDetails/ItemType'}, {path: 'Value'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.itemValueVisibilityTrigger'}"
+								numberUnit="{Currency}"></ObjectNumber>-->
+							<!--McLaren entension changes below-->
+							<Text text="{ItemNumberFormatted}"></Text>
+							<!--	<ObjectNumber
+								number="{parts: [{path: 'ProductDetails/MaterialID'}], formatter: 'ui.s2p.mm.purcontract.approve.util.Conversions.formatNumber'}"></ObjectNumber>
+						-->
+							<ObjectNumber number="{ProductDetails/MaterialID}" tooltip="{ProductDetails/MaterialID}"></ObjectNumber>
+							<ObjectIdentifier title="{Description}"
+								badgeNotes="{parts:[{path : 'NumberOfNotes'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonCountVisibilityTrigger'}"
+								badgeAttachments="{parts:[{path : 'NumberOfAttachments'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.commonCountVisibilityTrigger'}"></ObjectIdentifier>
+							<ObjectNumber number="{parts: [{path: 'Value'}], formatter: 'ui.s2p.mm.purcontract.approve.util.Conversions.formatNumberItemType'}"
+								visible="{parts:[{path : 'ProductDetails/ItemType'}, {path: 'Value'}], formatter : 'ui.s2p.mm.purcontract.approve.util.Conversions.itemValueVisibilityTrigger'}"
+								numberUnit="{Currency}"></ObjectNumber>
+							<ObjectNumber number="{parts: [{path: 'Quantity'}], formatter: 'ui.s2p.mm.purcontract.approve.util.Conversions.formatNumber'}"></ObjectNumber>
+							<Text text="{PricePerUnit}"></Text>
+							<ObjectNumber number="{parts: [{path: 'DeliveryAddress/Plant'}], formatter: 'ui.s2p.mm.purcontract.approve.util.Conversions.formatNumber'}"></ObjectNumber>
+							<Text text="{StorageLocation}"></Text>
+							<!--McLaren entension changes complete-->
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<!-- </layout:VerticalLayout> -->
+		<footer>
+			<Bar id="detailFooter"></Bar>
+		</footer>
+	</Page>
+</core:View>

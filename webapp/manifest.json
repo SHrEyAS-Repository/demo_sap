@@ -1,0 +1,156 @@
+{
+	"_version": "1.1.0",
+	"sap.app": {
+		"_version": "1.3.0",
+		"id": "ui.s2p.mm.purcontract.approve.zmmsaapvext",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"tags": {
+			"keywords": []
+		},
+		"dataSources": {
+			"data": {
+				"uri": "/sap/opu/odata/sap/SRA001_PCAPPROVAL;mo/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/metadata.xml",
+					"odataVersion": "2.0"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"dependencies": {
+			"minUI5Version": "1.3.0",
+			"libs": {
+				"sap.ui.layout": {},
+				"sap.ui.core": {},
+				"sap.m": {}
+			},
+			"components": {
+				"ui.s2p.mm.purcontract.approve.zmmsaapvext": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "ui.s2p.mm.purcontract.approve.zmmsaapvext.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "data",
+				"settings": {}
+			}
+		},
+		"config": {
+			"fullWidth": true,
+			"serviceConfig": {
+				"name": "",
+				"serviceUrl": "/sap/opu/odata/sap/SRA001_PCAPPROVAL;mo/"
+			},
+			"sap.ca.i18Nconfigs": {
+				"bundleName": "ui.s2p.mm.purcontract.approve.zmmsaapvext.i18n.i18n"
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"routing": {
+			"config": {
+				"viewType": "XML",
+				"async": true
+			}
+		},
+		"extends": {
+			"component": "ui.s2p.mm.purcontract.approve.zmmsaapvext.Component",
+			"extensions": {
+				"sap.ui.viewReplacements": {
+					"ui.s2p.mm.purcontract.approve.view.S2": {
+						"viewName": "ui.s2p.mm.purcontract.approve.zmmsaapvext.view.S2Custom",
+						"type": "XML"
+					},
+					"ui.s2p.mm.purcontract.approve.view.ItemDetails": {
+						"viewName": "ui.s2p.mm.purcontract.approve.zmmsaapvext.view.ItemDetailsCustom",
+						"type": "XML"
+					},
+					"ui.s2p.mm.purcontract.approve.view.S3": {
+						"viewName": "ui.s2p.mm.purcontract.approve.zmmsaapvext.view.S3Custom",
+						"type": "XML"
+					}
+				},
+				"sap.ui.viewModifications": {
+					"ui.s2p.mm.purcontract.approve.view.S3": {
+						"PCInformationAccountAssignment": {
+							"visible": false
+						},
+						"PCInformationPlant": {
+							"visible": false
+						},
+						"PCInformationContractType": {
+							"visible": false
+						}
+					},
+					"ui.s2p.mm.purcontract.approve.view.ItemDetails": {
+						"PricingCondTableColumnQuantity": {
+							"visible": false
+						},
+						"PricingCondTableColumnScale": {
+							"visible": false
+						}
+					}
+				},
+				"sap.ui.viewExtensions": {
+					"ui.s2p.mm.purcontract.approve.view.S3": {
+						"extInformation": {
+							"className": "sap.ui.core.Fragment",
+							"fragmentName": "ui.s2p.mm.purcontract.approve.zmmsaapvext.view.S3_extInformationCustom",
+							"type": "XML"
+						}
+					}
+				},
+				"sap.ui.controllerExtensions": {
+					"ui.s2p.mm.purcontract.approve.view.S3": {
+						"controllerName": "ui.s2p.mm.purcontract.approve.zmmsaapvext.view.S3Custom"
+					}
+				}
+			}
+		}
+	},
+	"sap.platform.hcp": {
+		"_version": "1.2.0",
+		"uri": "webapp"
+	}
+}
